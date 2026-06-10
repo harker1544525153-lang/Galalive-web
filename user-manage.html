@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/user-manage.css">
+
+</head>
+<body>
+<div class="sidebar">
+    <div class="brand">
+        <div class="logo">G</div>
+        <div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div>
+    </div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理</div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核</div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item active" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info">
+        <div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div>
+        <div class="detail" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号"><div class="uname">管理员</div><div class="urole">超级管理员</div></div>
+        <button class="logout" onclick="location.href='login.html'">⏻</button>
+    </div>
+</div>
+<div class="main">
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb">系统 / <span>用户管理</span></div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="搜索用户名/ID..."></div>
+        <div class="actions">
+            <button class="act-btn" onclick="toggleNotify()">🔔</button>
+            <button class="act-btn" onclick="toggleSettings()">⚙</button>
+        </div>
+        </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+    <div class="content">
+        <div class="page-title">用户管理</div>
+        <div class="page-sub">管理平台注册用户和权限</div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(255,77,109,0.1);">👥</div><span class="stat-label">总用户数</span></div>
+                <div class="stat-value">128,456</div>
+                <div class="stat-change up">↑ 12.5% <span>较上月</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(0,217,255,0.1);">✅</div><span class="stat-label">活跃用户</span></div>
+                <div class="stat-value">45,678</div>
+                <div class="stat-change up">↑ 8.2% <span>较上月</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(255,215,0,0.1);">👤</div><span class="stat-label">新增用户</span></div>
+                <div class="stat-value">2,345</div>
+                <div class="stat-change up">↑ 15.8% <span>较上月</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(255,68,68,0.1);">🚫</div><span class="stat-label">封禁用户</span></div>
+                <div class="stat-value">456</div>
+                <div class="stat-change down">↓ 3.2% <span>较上月</span></div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active">全部用户</div>
+            <div class="tab">普通用户</div>
+            <div class="tab">VIP用户</div>
+            <div class="tab">封禁用户</div>
+        </div>
+        
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <select class="filter-select"><option>全部状态</option><option>正常</option><option>封禁</option><option>待审核</option></select>
+                <select class="filter-select"><option>全部等级</option><option>普通</option><option>VIP</option><option>SVIP</option></select>
+                <button class="btn btn-secondary">导出</button>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-primary" onclick="openUserModal()">+ 添加用户</button>
+            </div>
+        </div>
+        
+        <div class="table-card">
+            <div class="table-header">
+                <div class="count">共 128,456 条记录</div>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>用户</th>
+                        <th>ID</th>
+                        <th>等级</th>
+                        <th>注册时间</th>
+                        <th>最后登录</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#FF4D6D,#FF8FA3);">张</div><div><div class="u-name">张三</div><div class="u-id">用户</div></div></div></td>
+                        <td>100001</td>
+                        <td><span style="color:#FFD700;">VIP</span></td>
+                        <td>2024-01-15</td>
+                        <td>2024-06-06 10:30</td>
+                        <td><span class="status-tag active">正常</span></td>
+                        <td><button class="action-btn-sm" title="编辑">✏️</button><button class="action-btn-sm" title="详情">👁️</button><button class="action-btn-sm" title="封禁">🚫</button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#7B2CBF,#00D9FF);">李</div><div><div class="u-name">李四</div><div class="u-id">用户</div></div></div></td>
+                        <td>100002</td>
+                        <td>普通</td>
+                        <td>2024-02-20</td>
+                        <td>2024-06-05 15:45</td>
+                        <td><span class="status-tag active">正常</span></td>
+                        <td><button class="action-btn-sm" title="编辑">✏️</button><button class="action-btn-sm" title="详情">👁️</button><button class="action-btn-sm" title="封禁">🚫</button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#00D9FF,#7B2CBF);">王</div><div><div class="u-name">王五</div><div class="u-id">用户</div></div></div></td>
+                        <td>100003</td>
+                        <td><span style="color:#FF4D6D;">SVIP</span></td>
+                        <td>2024-03-10</td>
+                        <td>2024-06-06 09:20</td>
+                        <td><span class="status-tag banned">已封禁</span></td>
+                        <td><button class="action-btn-sm" title="编辑">✏️</button><button class="action-btn-sm" title="详情">👁️</button><button class="action-btn-sm" title="解封">🔓</button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#FFD700,#FF8FA3);">赵</div><div><div class="u-name">赵六</div><div class="u-id">用户</div></div></div></td>
+                        <td>100004</td>
+                        <td>普通</td>
+                        <td>2024-04-05</td>
+                        <td>2024-06-04 22:10</td>
+                        <td><span class="status-tag inactive">未活跃</span></td>
+                        <td><button class="action-btn-sm" title="编辑">✏️</button><button class="action-btn-sm" title="详情">👁️</button><button class="action-btn-sm" title="封禁">🚫</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button class="page-btn">«</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">»</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加用户弹窗 -->
+<div class="usr-modal-overlay" id="userModal">
+    <div class="usr-modal">
+        <div class="um-header">
+            <div class="um-title">添加用户</div>
+            <button class="um-close" onclick="closeUserModal()">×</button>
+        </div>
+        <div class="um-body">
+            <div class="um-row">
+                <div class="um-field">
+                    <label>用户名</label>
+                    <input type="text" placeholder="请输入用户名" id="um-username">
+                </div>
+                <div class="um-field">
+                    <label>手机号</label>
+                    <input type="tel" placeholder="请输入手机号" id="um-phone">
+                </div>
+            </div>
+            <div class="um-row">
+                <div class="um-field">
+                    <label>用户昵称</label>
+                    <input type="text" placeholder="请输入昵称" id="um-nickname">
+                </div>
+                <div class="um-field">
+                    <label>邮箱</label>
+                    <input type="email" placeholder="请输入邮箱" id="um-email">
+                </div>
+            </div>
+            <div class="um-row">
+                <div class="um-field">
+                    <label>初始密码</label>
+                    <input type="password" placeholder="请输入密码" id="um-password">
+                </div>
+                <div class="um-field">
+                    <label>确认密码</label>
+                    <input type="password" placeholder="请再次输入密码" id="um-password2">
+                </div>
+            </div>
+            <div class="um-row">
+                <div class="um-field">
+                    <label>用户等级</label>
+                    <select id="um-level">
+                        <option value="">请选择</option>
+                        <option value="normal">普通用户</option>
+                        <option value="vip">VIP用户</option>
+                        <option value="svip">SVIP用户</option>
+                    </select>
+                </div>
+                <div class="um-field">
+                    <label>状态</label>
+                    <select id="um-status">
+                        <option value="active">正常</option>
+                        <option value="inactive">未激活</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="um-footer">
+            <button class="btn btn-secondary" onclick="closeUserModal()">取消</button>
+            <button class="btn btn-primary" onclick="submitUser()">确认添加</button>
+        </div>
+    </div>
+</div>
+
+    <script src="js/user-manage.js"></script>
+
+</body>
+</html>

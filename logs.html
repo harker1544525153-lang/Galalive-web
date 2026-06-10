@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>操作日志 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/logs.css">
+
+</head>
+<body>
+<div class="sidebar">
+    <div class="brand">
+        <div class="logo">G</div>
+        <div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div>
+    </div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理</div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核</div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item active" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info">
+        <div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div>
+        <div class="detail" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号"><div class="uname">管理员</div><div class="urole">超级管理员</div></div>
+        <button class="logout" onclick="location.href='login.html'">⏻</button>
+    </div>
+</div>
+<div class="main">
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb">系统 / <span>操作日志</span></div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="搜索操作内容..."></div>
+        <div class="actions">
+            <button class="act-btn" onclick="toggleNotify()">🔔</button>
+            <button class="act-btn" onclick="toggleSettings()">⚙</button>
+        </div>
+        </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+    <div class="content">
+        <div class="page-title">操作日志</div>
+        <div class="page-sub">查看和管理系统操作记录</div>
+        
+        <div class="tabs">
+            <div class="tab active">全部日志</div>
+            <div class="tab">登录日志</div>
+            <div class="tab">操作日志</div>
+            <div class="tab">异常日志</div>
+        </div>
+        
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <select class="filter-select"><option>全部操作</option><option>登录</option><option>编辑</option><option>删除</option><option>审核</option></select>
+                <select class="filter-select"><option>全部级别</option><option>信息</option><option>警告</option><option>错误</option></select>
+                <select class="filter-select"><option>今日</option><option>昨日</option><option>近7天</option><option>近30天</option></select>
+                <button class="btn btn-secondary">导出</button>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-primary">清理旧日志</button>
+            </div>
+        </div>
+        
+        <div class="table-card">
+            <div class="table-header">
+                <div class="count">共 15,678 条记录</div>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>操作者</th>
+                        <th>操作类型</th>
+                        <th>操作内容</th>
+                        <th>级别</th>
+                        <th>IP地址</th>
+                        <th>详情</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-06-06 10:30:15</td>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#FF4D6D,#FF8FA3);">管</div><div><div class="u-name">管理员</div><div class="u-role">超级管理员</div></div></div></td>
+                        <td>登录</td>
+                        <td>系统登录成功</td>
+                        <td><span class="level-tag info">信息</span></td>
+                        <td>192.168.1.100</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">查看</button></td>
+                    </tr>
+                    <tr>
+                        <td>2024-06-06 10:28:45</td>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#7B2CBF,#00D9FF);">审</div><div><div class="u-name">审核员</div><div class="u-role">审核员</div></div></div></td>
+                        <td>审核</td>
+                        <td>审核通过用户实名认证申请</td>
+                        <td><span class="level-tag success">成功</span></td>
+                        <td>192.168.1.101</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">查看</button></td>
+                    </tr>
+                    <tr>
+                        <td>2024-06-06 10:25:12</td>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#00D9FF,#7B2CBF);">运</div><div><div class="u-name">运营</div><div class="u-role">运营管理员</div></div></div></td>
+                        <td>编辑</td>
+                        <td>修改主播资料信息</td>
+                        <td><span class="level-tag warning">警告</span></td>
+                        <td>192.168.1.102</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">查看</button></td>
+                    </tr>
+                    <tr>
+                        <td>2024-06-06 10:20:33</td>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#FFD700,#FF8FA3);">系</div><div><div class="u-name">系统</div><div class="u-role">系统</div></div></div></td>
+                        <td>系统</td>
+                        <td>数据同步任务执行成功</td>
+                        <td><span class="level-tag info">信息</span></td>
+                        <td>-</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">查看</button></td>
+                    </tr>
+                    <tr>
+                        <td>2024-06-06 10:15:58</td>
+                        <td><div class="user-cell"><div class="u-avatar" style="background:linear-gradient(135deg,#FF4444,#FF8FA3);">系</div><div><div class="u-name">系统</div><div class="u-role">系统</div></div></div></td>
+                        <td>异常</td>
+                        <td>数据库连接超时</td>
+                        <td><span class="level-tag danger">错误</span></td>
+                        <td>-</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">查看</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button class="page-btn">«</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">»</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="js/logs.js"></script>
+
+</body>
+</html>

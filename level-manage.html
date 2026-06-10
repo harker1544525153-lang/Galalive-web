@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>等级管理 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/level-manage.css">
+
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="brand">
+        <div class="logo">G</div>
+        <div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div>
+    </div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理</div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item active" onclick="navigateTo('level-manage')"><span class="icon">⭐</span>等级管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核</div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info">
+        <div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div>
+        <div class="detail" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号"><div class="uname">管理员</div><div class="urole">超级管理员</div></div>
+        <button class="logout" onclick="location.href='login.html'">⏻</button>
+    </div>
+</div>
+<!-- Main -->
+<div class="main">
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb">运营管理 / <span>等级管理</span></div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="搜索等级名称..."></div>
+        <div class="actions">
+            <button class="act-btn" onclick="toggleNotify()">🔔</button>
+            <button class="act-btn" onclick="toggleSettings()">⚙</button>
+        </div>
+        </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+    <div class="content">
+        <div class="page-title">等级管理</div>
+        <div class="page-sub">管理用户等级和特权配置</div>
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button class="btn btn-secondary">导出</button>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-primary" onclick="addLevel()">+ 添加等级</button>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="table-card">
+            <table class="data-table">
+                <thead><tr><th>等级</th><th>名称</th><th>所需经验</th><th>特权</th><th>用户数</th><th>创建时间</th><th>操作</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="level-badge level-5">Lv5 钻石</span></td><td style="font-weight:600;">钻石会员</td><td>100,000</td><td>专属礼物、入场特效、优先客服</td><td>1,256</td><td>2024-01-01</td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td><span class="level-badge level-4">Lv4 黄金</span></td><td style="font-weight:600;">黄金会员</td><td>50,000</td><td>专属礼物、入场特效</td><td>3,842</td><td>2024-01-01</td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td><span class="level-badge level-3">Lv3 白银</span></td><td style="font-weight:600;">白银会员</td><td>20,000</td><td>专属头像框、发言高亮</td><td>8,921</td><td>2024-01-01</td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td><span class="level-badge level-2">Lv2 青铜</span></td><td style="font-weight:600;">青铜会员</td><td>5,000</td><td>专属头像框</td><td>24,568</td><td>2024-01-01</td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td><span class="level-badge level-1">Lv1 新手</span></td><td style="font-weight:600;">新用户</td><td>0</td><td>基础功能</td><td>89,869</td><td>2024-01-01</td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 添加等级弹窗 -->
+<div class="lv-modal-overlay" id="levelModal">
+    <div class="lv-modal">
+        <div class="lv-header">
+            <div class="lv-title">添加等级</div>
+            <button class="lv-close" onclick="closeLevelModal()">×</button>
+        </div>
+        <div class="lv-body">
+            <div class="lv-row">
+                <div class="lv-field">
+                    <label>等级编号</label>
+                    <input type="number" placeholder="例如：6" id="lv-level">
+                </div>
+                <div class="lv-field">
+                    <label>等级名称</label>
+                    <input type="text" placeholder="例如：王者" id="lv-name">
+                </div>
+            </div>
+            <div class="lv-row">
+                <div class="lv-field">
+                    <label>所需经验</label>
+                    <input type="number" placeholder="升级所需总经验" id="lv-exp">
+                </div>
+                <div class="lv-field">
+                    <label>等级颜色</label>
+                    <select id="lv-color">
+                        <option value="">请选择</option>
+                        <option value="level-1">紫色 Lv1</option>
+                        <option value="level-2">蓝色 Lv2</option>
+                        <option value="level-3">金色 Lv3</option>
+                        <option value="level-4">粉色 Lv4</option>
+                        <option value="level-5">橙色 Lv5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="lv-row">
+                <div class="lv-field" style="flex:1">
+                    <label>特权说明</label>
+                    <textarea placeholder="描述等级特权" id="lv-privilege"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="lv-footer">
+            <button class="btn btn-secondary" onclick="closeLevelModal()">取消</button>
+            <button class="btn btn-primary" onclick="submitLevel()">确认添加</button>
+        </div>
+    </div>
+</div>
+
+    <script src="js/level-manage.js"></script>
+
+</body>
+</html>

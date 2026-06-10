@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资金管理 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/finance.css">
+
+</head>
+<body>
+<div class="sidebar">
+    <div class="brand">
+        <div class="logo">G</div>
+        <div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div>
+    </div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理</div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核</div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item active" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info">
+        <div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div>
+        <div class="detail" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号"><div class="uname">管理员</div><div class="urole">超级管理员</div></div>
+        <button class="logout" onclick="location.href='login.html'">⏻</button>
+    </div>
+</div>
+<div class="main">
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb">数据 / <span>资金管理</span></div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="搜索订单号..."></div>
+        <div class="actions">
+            <button class="act-btn" onclick="toggleNotify()">🔔</button>
+            <button class="act-btn" onclick="toggleSettings()">⚙</button>
+        </div>
+        </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+    <div class="content">
+        <div class="page-title">资金管理</div>
+        <div class="page-sub">管理平台资金流水和用户提现</div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(255,77,109,0.1);">💰</div><span class="stat-label">今日流水</span></div>
+                <div class="stat-value">¥586,432</div>
+                <div class="stat-change up">↑ 15.2% <span>较昨日</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(0,217,255,0.1);">💎</div><span class="stat-label">充值总额</span></div>
+                <div class="stat-value">¥328,560</div>
+                <div class="stat-change up">↑ 12.8% <span>较昨日</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(255,215,0,0.1);">🏦</div><span class="stat-label">待处理提现</span></div>
+                <div class="stat-value">156</div>
+                <div class="stat-change down">↓ 5.2% <span>较昨日</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><div class="stat-icon" style="background:rgba(123,44,191,0.1);">📊</div><span class="stat-label">本月收益</span></div>
+                <div class="stat-value">¥18,456,789</div>
+                <div class="stat-change up">↑ 28.5% <span>较上月</span></div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active">全部流水</div>
+            <div class="tab">充值记录</div>
+            <div class="tab">提现记录</div>
+            <div class="tab">礼物分成</div>
+        </div>
+        
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <select class="filter-select"><option>全部状态</option><option>待处理</option><option>已完成</option><option>已拒绝</option></select>
+                <select class="filter-select"><option>全部类型</option><option>充值</option><option>提现</option><option>礼物</option></select>
+                <button class="btn btn-secondary">导出</button>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-primary">+ 批量处理</button>
+            </div>
+        </div>
+        
+        <div class="table-card">
+            <div class="table-header">
+                <div class="count">共 2,568 条记录</div>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>订单号</th>
+                        <th>用户</th>
+                        <th>类型</th>
+                        <th>金额</th>
+                        <th>状态</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024060610001</td>
+                        <td>张三 (ID: 10001)</td>
+                        <td>充值</td>
+                        <td style="color:#00D9FF;">+ ¥100.00</td>
+                        <td><span class="status-tag success">已完成</span></td>
+                        <td>2024-06-06 10:30:15</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">详情</button></td>
+                    </tr>
+                    <tr>
+                        <td>2024060610002</td>
+                        <td>李四 (ID: 10002)</td>
+                        <td>提现</td>
+                        <td style="color:#FF4444;">- ¥500.00</td>
+                        <td><span class="status-tag pending">待处理</span></td>
+                        <td>2024-06-06 10:35:22</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">处理</button></td>
+                    </tr>
+                    <tr>
+                        <td>2024060610003</td>
+                        <td>王五 (ID: 10003)</td>
+                        <td>礼物分成</td>
+                        <td style="color:#00D9FF;">+ ¥89.50</td>
+                        <td><span class="status-tag success">已完成</span></td>
+                        <td>2024-06-06 10:40:08</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">详情</button></td>
+                    </tr>
+                    <tr>
+                        <td>2024060610004</td>
+                        <td>赵六 (ID: 10004)</td>
+                        <td>提现</td>
+                        <td style="color:#FF4444;">- ¥1,200.00</td>
+                        <td><span class="status-tag failed">已拒绝</span></td>
+                        <td>2024-06-06 10:45:33</td>
+                        <td><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">查看</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button class="page-btn">«</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">»</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="js/finance.js"></script>
+
+</body>
+</html>

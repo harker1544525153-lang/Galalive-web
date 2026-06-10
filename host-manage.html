@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主播管理 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/host-manage.css">
+
+</head>
+<body>
+<div class="sidebar">
+    <div class="brand"><div class="logo">G</div><div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div></div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item active" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理 <span class="badge">12</span></div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核 <span class="badge">5</span></div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info"><div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div><div class="detail"><div class="uname">管理员</div><div class="urole">超级管理员</div></div><button class="logout" onclick="location.href='login.html'">⏻</button></div>
+</div>
+<div class="main">
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button><div class="breadcrumb">运营管理 / <span>主播管理</span></div><div class="actions"><button class="act-btn" onclick="toggleNotify()">🔔</button></div>    </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+    <div class="content">
+        <div class="page-header">
+            <div class="page-info"><div class="title">主播管理</div><div class="sub">管理平台所有主播信息与状态</div></div>
+            <div class="actions"><button class="btn btn-secondary">📥 导出</button><button class="btn btn-primary" onclick="openAddModal()">+ 添加主播</button></div>
+        </div>
+        <div class="filters">
+            <div class="search-input"><span>🔍</span><input type="text" placeholder="搜索主播昵称/ID"></div>
+            <select class="filter-select"><option>全部状态</option><option>直播中</option><option>在线</option><option>离线</option><option>已封禁</option></select>
+            <select class="filter-select"><option>全部分类</option><option>才艺</option><option>音乐</option><option>游戏</option><option>聊天</option></select>
+            <select class="filter-select"><option>最近7天</option><option>最近30天</option><option>全部</option></select>
+        </div>
+        <div class="table-card">
+            <div class="table-header"><span class="count">共 3,268 位主播</span></div>
+            <table class="data-table">
+                <thead><tr><th><input type="checkbox"></th><th>主播</th><th>分类</th><th>粉丝数</th><th>本月收益</th><th>直播时长</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                    <tr><td><input type="checkbox"></td><td><div class="host-cell"><div class="h-avatar" style="background:linear-gradient(135deg,#FF4D6D,#FF8FA3);">红</div><div><div class="h-name">🌺 小红</div><div class="h-id">ID: 1001</div></div></div></td><td>才艺</td><td>12.5k</td><td style="color:#FFD700;">¥5,280</td><td>128h</td><td><span class="status-tag live">● 直播中</span></td><td><button class="action-btn-sm" onclick="viewHost(this)" title="查看">👁</button>
+<button class="action-btn-sm" onclick="editHost(this)" title="编辑">✎</button>
+<button class="action-btn-sm" title="更多">⋯</button></td></tr>
+                    <tr><td><input type="checkbox"></td><td><div class="host-cell"><div class="h-avatar" style="background:linear-gradient(135deg,#7B2CBF,#00D9FF);">明</div><div><div class="h-name">🎵 小明</div><div class="h-id">ID: 1002</div></div></div></td><td>音乐</td><td>8.3k</td><td style="color:#FFD700;">¥3,650</td><td>96h</td><td><span class="status-tag live">● 直播中</span></td><td><button class="action-btn-sm" onclick="viewHost(this)" title="查看">👁</button>
+<button class="action-btn-sm" onclick="editHost(this)" title="编辑">✎</button>
+<button class="action-btn-sm" title="更多">⋯</button></td></tr>
+                    <tr><td><input type="checkbox"></td><td><div class="host-cell"><div class="h-avatar" style="background:linear-gradient(135deg,#2A1A2A,#1A1A2E);">芳</div><div><div class="h-name">🎮 小芳</div><div class="h-id">ID: 1003</div></div></div></td><td>游戏</td><td>6.8k</td><td style="color:#FFD700;">¥2,880</td><td>72h</td><td><span class="status-tag online">● 在线</span></td><td><button class="action-btn-sm" onclick="viewHost(this)" title="查看">👁</button>
+<button class="action-btn-sm" onclick="editHost(this)" title="编辑">✎</button>
+<button class="action-btn-sm" title="更多">⋯</button></td></tr>
+                    <tr><td><input type="checkbox"></td><td><div class="host-cell"><div class="h-avatar" style="background:linear-gradient(135deg,#1A1A2A,#0D0D1A);">月</div><div><div class="h-name">👑 小月</div><div class="h-id">ID: 1004</div></div></div></td><td>聊天</td><td>5.2k</td><td style="color:#FFD700;">¥2,100</td><td>65h</td><td><span class="status-tag online">● 在线</span></td><td><button class="action-btn-sm" onclick="viewHost(this)" title="查看">👁</button>
+<button class="action-btn-sm" onclick="editHost(this)" title="编辑">✎</button>
+<button class="action-btn-sm" title="更多">⋯</button></td></tr>
+                    <tr><td><input type="checkbox"></td><td><div class="host-cell"><div class="h-avatar" style="background:linear-gradient(135deg,#1A2A1A,#0D1A0D);">杰</div><div><div class="h-name">🎸 阿杰</div><div class="h-id">ID: 1005</div></div></div></td><td>才艺</td><td>3.6k</td><td style="color:#FFD700;">¥1,560</td><td>48h</td><td><span class="status-tag offline">● 离线</span></td><td><button class="action-btn-sm" onclick="viewHost(this)" title="查看">👁</button>
+<button class="action-btn-sm" onclick="editHost(this)" title="编辑">✎</button>
+<button class="action-btn-sm" title="更多">⋯</button></td></tr>
+                    <tr><td><input type="checkbox"></td><td><div class="host-cell"><div class="h-avatar" style="background:linear-gradient(135deg,#2A2A1A,#1A1A0D);">婷</div><div><div class="h-name">🌟 小婷</div><div class="h-id">ID: 1006</div></div></div></td><td>音乐</td><td>1.2k</td><td style="color:#FFD700;">¥520</td><td>12h</td><td><span class="status-tag offline">● 离线</span></td><td><button class="action-btn-sm" onclick="viewHost(this)" title="查看">👁</button>
+<button class="action-btn-sm" onclick="editHost(this)" title="编辑">✎</button>
+<button class="action-btn-sm" title="更多">⋯</button></td></tr>
+                    <tr><td><input type="checkbox"></td><td><div class="host-cell"><div class="h-avatar" style="background:linear-gradient(135deg,#3A1A1A,#2A0D0D);">违</div><div><div class="h-name">⚠ 违规用户</div><div class="h-id">ID: 2001</div></div></div></td><td>-</td><td>56</td><td style="color:#FFD700;">¥0</td><td>0h</td><td><span class="status-tag banned">● 已封禁</span></td><td><button class="action-btn-sm" onclick="viewHost(this)" title="查看">👁</button>
+<button class="action-btn-sm" onclick="editHost(this)" title="编辑">✎</button>
+<button class="action-btn-sm" title="更多">⋯</button></td></tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <span class="page-btn">‹</span>
+                <span class="page-btn active">1</span><span class="page-btn">2</span><span class="page-btn">3</span><span class="page-btn">⋯</span><span class="page-btn">12</span>
+                <span class="page-btn">›</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 新增主播弹窗 -->
+<div class="modal-overlay" id="addModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">添加主播</div>
+            <button class="modal-close" onclick="closeAddModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-field">
+                    <label>主播昵称</label>
+                    <input type="text" placeholder="请输入昵称" id="add-nickname">
+                </div>
+                <div class="form-field">
+                    <label>用户ID</label>
+                    <input type="number" placeholder="自动生成" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>主播分类</label>
+                    <select id="add-category">
+                        <option value="">请选择</option>
+                        <option value="1">才艺</option>
+                        <option value="2">音乐</option>
+                        <option value="3">游戏</option>
+                        <option value="4">聊天</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>联系方式</label>
+                    <input type="text" placeholder="手机号/微信" id="add-contact">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>初始粉丝数</label>
+                    <input type="number" placeholder="0" id="add-fans">
+                </div>
+                <div class="form-field">
+                    <label>账号状态</label>
+                    <select id="add-status">
+                        <option value="offline">离线</option>
+                        <option value="online">在线</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-field" style="flex:1">
+                    <label>简介</label>
+                    <textarea placeholder="请输入主播简介" id="add-intro"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAddModal()">取消</button>
+            <button class="btn btn-primary" onclick="submitAdd()">确认添加</button>
+        </div>
+    </div>
+</div>
+
+<!-- 查看主播侧栏 -->
+<div class="view-panel-overlay" id="viewOverlay" onclick="closeViewPanel()">
+    <div class="view-panel" onclick="event.stopPropagation()">
+        <div class="vp-header">
+            <div class="vp-title">主播详情</div>
+            <button class="modal-close" onclick="closeViewPanel()">×</button>
+        </div>
+        <div class="vp-body" id="view-body">
+            <!-- 内容填充 -->
+        </div>
+    </div>
+</div>
+
+    <script src="js/host-manage.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统设置 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/settings.css">
+
+</head>
+<body>
+
+<!-- ===== 侧边栏 ===== -->
+<div class="sidebar">
+    <div class="brand">
+        <div class="logo">G</div>
+        <div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div>
+    </div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理 <span class="badge">12</span></div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核 <span class="badge">5</span></div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item active" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info">
+        <div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div>
+        <div class="detail" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号"><div class="uname">管理员</div><div class="urole">超级管理员</div></div>
+        <button class="logout" onclick="location.href='login.html'">⏻</button>
+    </div>
+</div>
+
+<!-- ===== 主内容 ===== -->
+<div class="main">
+    <!-- 顶部栏 -->
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb">系统 / <span>系统设置</span></div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="搜索设置..."></div>
+        <div class="actions">
+            <button class="act-btn" onclick="toggleNotify()">🔔<span class="dot"></span></button>
+            <button class="act-btn" onclick="toggleSecurity()">🛡</button>
+            <button class="act-btn" onclick="toggleSettings()">⚙</button>
+        </div>
+    </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+
+    <!-- 内容 -->
+    <div class="content">
+        <div class="page-title">系统设置</div>
+        <div class="page-sub">管理平台系统参数与运营配置</div>
+
+        <div class="settings-layout">
+            <!-- 左侧标签 -->
+            <div class="settings-tabs">
+                <div class="settings-tab active" onclick="switchTab(this,0)">⚙ 基本设置</div>
+                <div class="settings-tab" onclick="switchTab(this,1)">🎁 礼物/道具</div>
+                <div class="settings-tab" onclick="switchTab(this,2)">💰 提现/分成</div>
+                <div class="settings-tab" onclick="switchTab(this,3)">🔒 安全设置</div>
+                <div class="settings-tab" onclick="switchTab(this,4)">📄 审核规则</div>
+            </div>
+
+            <!-- ===== 面板0：基本设置 ===== -->
+            <div class="settings-panel" id="panel0">
+                <h3>⚙ 基本设置</h3>
+
+                <div class="form-group">
+                    <span class="form-label">平台名称</span>
+                    <div class="form-control">
+                        <input type="text" value="GALA LIVE" placeholder="请输入平台名称">
+                        <div class="desc">显示在网站标题和 Logo 旁边的名称</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">平台公告</span>
+                    <div class="form-control">
+                        <textarea placeholder="请输入平台公告内容...">欢迎来到 GALA LIVE！请遵守社区规则，文明直播，理性消费。</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">主播等级体系</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>启用</label>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">开启后主播将根据经验值自动升级</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">用户注册</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>允许新用户注册</label>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">关闭后新用户将无法注册账号</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">每页显示条数</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <select class="w-120"><option>10</option><option selected>20</option><option>30</option><option>50</option></select>
+                            <span class="unit">条/页</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="showToast('基本设置已保存')">💾 保存设置</button>
+                    <button class="btn btn-secondary" onclick="showToast('已重置')">重置</button>
+                </div>
+            </div>
+
+            <!-- ===== 面板1：礼物/道具 ===== -->
+            <div class="settings-panel hidden" id="panel1">
+                <h3>🎁 礼物/道具设置</h3>
+
+                <div class="form-group">
+                    <span class="form-label">钻石兑换比例</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <input type="number" value="100" class="w-80">
+                            <span class="unit">钻石 = ¥</span>
+                            <input type="number" value="10" class="w-80">
+                            <span class="unit">元</span>
+                        </div>
+                        <div class="desc">即 10 钻石 = 1 元</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">礼物审核</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>新礼物需要审核上架</label>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">开启后新创建的礼物道具需要审核才能上架</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">礼物特效</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>全屏特效</label>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">礼物价值超过 500 钻石时触发全屏特效</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">弹幕效果</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>弹幕礼物动效</label>
+                            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">赠送礼物时在弹幕区显示动效</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="showToast('礼物设置已保存')">💾 保存设置</button>
+                    <button class="btn btn-secondary" onclick="showToast('已重置')">重置</button>
+                </div>
+            </div>
+
+            <!-- ===== 面板2：提现/分成 ===== -->
+            <div class="settings-panel hidden" id="panel2">
+                <h3>💰 提现/分成设置</h3>
+
+                <div class="form-group">
+                    <span class="form-label">主播分成比例</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <input type="number" value="50" class="w-80"><span class="unit">%</span>
+                        </div>
+                        <div class="desc">主播获得礼物收益的比例，平台收取剩余部分</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">提现门槛</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <span class="unit">¥</span>
+                            <input type="number" value="100" class="w-120">
+                        </div>
+                        <div class="desc">主播最低可提现金额</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">提现手续费</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <input type="number" value="2" class="w-80"><span class="unit">%</span>
+                        </div>
+                        <div class="desc">每笔提现收取的手续费比例</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">提现冻结期</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <input type="number" value="7" class="w-80"><span class="unit">天</span>
+                        </div>
+                        <div class="desc">礼物收益到账后需等待 N 天才能提现</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">结算周期</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <select class="w-150">
+                                <option selected>每月 1 日</option>
+                                <option>每月 15 日</option>
+                                <option>每周一</option>
+                                <option>每日结算</option>
+                            </select>
+                        </div>
+                        <div class="desc">平台与主播的收益结算日期</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="showToast('分成设置已保存')">💾 保存设置</button>
+                    <button class="btn btn-secondary" onclick="showToast('已重置')">重置</button>
+                </div>
+            </div>
+
+            <!-- ===== 面板3：安全设置 ===== -->
+            <div class="settings-panel hidden" id="panel3">
+                <h3>🔒 安全设置</h3>
+
+                <div class="form-group">
+                    <span class="form-label">双因素认证</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>强制管理员使用 TOTP</label>
+                            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">开启后所有管理员登录需要 TOTP 验证码</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">登录超时</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <select class="w-150">
+                                <option>15 分钟</option>
+                                <option selected>30 分钟</option>
+                                <option>1 小时</option>
+                                <option>2 小时</option>
+                                <option>8 小时</option>
+                            </select>
+                        </div>
+                        <div class="desc">登录后无操作自动登出时间</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">登录失败锁定</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <input type="number" value="5" class="w-60">
+                            <span class="unit">次失败后锁定</span>
+                            <input type="number" value="30" class="w-60">
+                            <span class="unit">分钟</span>
+                        </div>
+                        <div class="desc">连续登录失败达到次数后账号将被临时锁定</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">密码策略</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>要求强密码（大小写+数字+特殊字符）</label>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">开启后新密码必须符合强度要求</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">IP 白名单</span>
+                    <div class="form-control">
+                        <textarea placeholder="每行一个 IP 地址，留空表示不限制">192.168.1.0/24
+10.0.0.1</textarea>
+                        <div class="desc">仅允许白名单内的 IP 访问后台，留空不限制</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="showToast('安全设置已保存')">💾 保存设置</button>
+                    <button class="btn btn-secondary" onclick="showToast('已重置')">重置</button>
+                </div>
+            </div>
+
+            <!-- ===== 面板4：审核规则 ===== -->
+            <div class="settings-panel hidden" id="panel4">
+                <h3>📄 审核规则设置</h3>
+
+                <div class="form-group">
+                    <span class="form-label">违规关键词</span>
+                    <div class="form-control">
+                        <textarea placeholder="每行一个关键词">赌博
+色情
+暴力
+诈骗
+政治
+违禁品
+私服</textarea>
+                        <div class="desc">直播间弹幕和标题中命中关键词将自动触发审核</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">自动禁播</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>自动禁播违规直播间</label>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">检测到违规内容时自动禁播该直播间</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">敏感词替换</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>弹幕敏感词替换为 ***</label>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">将弹幕中的敏感词自动替换为 ***</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="form-label">截图审核</span>
+                    <div class="form-control">
+                        <div class="inline-controls">
+                            <label>定时截图审核直播间</label>
+                            <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                        </div>
+                        <div class="desc">每隔 30 分钟自动截图直播间画面进行审核</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="showToast('审核规则已保存')">💾 保存设置</button>
+                    <button class="btn btn-secondary" onclick="showToast('已重置')">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 轻提示组件 ===== -->
+<div id="toast" style="position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#fff;padding:10px 24px;border-radius:8px;font-size:14px;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.1);"></div>
+
+    <script src="js/settings.js"></script>
+
+</body>
+</html>

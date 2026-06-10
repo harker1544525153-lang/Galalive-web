@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实时监控 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/monitor.css">
+
+</head>
+<body>
+<div class="sidebar">
+    <div class="brand"><div class="logo">G</div><div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div></div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理</div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核</div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item active" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info"><div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div><div class="detail"><div class="uname">管理员</div><div class="urole">超级管理员</div></div><button class="logout" onclick="location.href='login.html'">⏻</button></div>
+</div>
+<div class="main">
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb">数据 / <span>实时监控</span></div>
+        <div class="live-indicator"><span class="dot"></span> 数据实时更新中</div>
+        <div class="actions"><button class="act-btn" onclick="toggleNotify()">🔔<span class="dot"></span></button><button class="act-btn" onclick="toggleSecurity()">🛡</button><button class="act-btn" onclick="toggleSettings()">⚙</button></div>
+        </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+    <div class="content">
+        <div class="page-title">实时监控</div>
+        <div class="page-sub">平台实时运行状态与性能监控</div>
+        <div class="monitor-stats">
+            <div class="mstat"><div class="num green">127</div><div class="label">活跃直播间</div></div>
+            <div class="mstat"><div class="num green">8.6k</div><div class="label">在线观众</div></div>
+            <div class="mstat"><div class="num pink">3.2k</div><div class="label">消息/分钟</div></div>
+            <div class="mstat"><div class="num gold">¥12.5k</div><div class="label">礼物/小时</div></div>
+            <div class="mstat"><div class="num purple">1.2k</div><div class="label">新增观众/小时</div></div>
+        </div>
+        <div class="monitor-grid">
+            <div class="monitor-card">
+                <div class="card-header"><span class="card-title"><span class="live-dot"></span> 热门直播间</span><span class="count">共 127 间</span></div>
+                <div class="stream-item">
+                    <div class="s-avatar" style="background:linear-gradient(135deg,#FF4D6D,#FF8FA3);">红</div>
+                    <div class="s-info"><div class="s-name">🌺 小红</div><div class="s-meta">才艺 · 已播 2h</div></div>
+                    <div class="s-stats"><div class="s-viewers">12.5k</div><div class="s-label">观看</div></div>
+                    <button class="s-action">👁</button>
+                </div>
+                <div class="stream-item">
+                    <div class="s-avatar" style="background:linear-gradient(135deg,#7B2CBF,#00D9FF);">明</div>
+                    <div class="s-info"><div class="s-name">🎵 小明</div><div class="s-meta">音乐 · 已播 1.5h</div></div>
+                    <div class="s-stats"><div class="s-viewers">8.3k</div><div class="s-label">观看</div></div>
+                    <button class="s-action">👁</button>
+                </div>
+                <div class="stream-item">
+                    <div class="s-avatar" style="background:linear-gradient(135deg,#2A1A2A,#1A1A2E);">芳</div>
+                    <div class="s-info"><div class="s-name">🎮 小芳</div><div class="s-meta">游戏 · 已播 45min</div></div>
+                    <div class="s-stats"><div class="s-viewers">6.8k</div><div class="s-label">观看</div></div>
+                    <button class="s-action">👁</button>
+                </div>
+                <div class="stream-item">
+                    <div class="s-avatar" style="background:linear-gradient(135deg,#1A1A2A,#0D0D1A);">月</div>
+                    <div class="s-info"><div class="s-name">👑 小月</div><div class="s-meta">聊天 · 已播 3h</div></div>
+                    <div class="s-stats"><div class="s-viewers">5.2k</div><div class="s-label">观看</div></div>
+                    <button class="s-action">👁</button>
+                </div>
+                <div class="stream-item">
+                    <div class="s-avatar" style="background:linear-gradient(135deg,#1A2A1A,#0D1A0D);">杰</div>
+                    <div class="s-info"><div class="s-name">🎸 阿杰</div><div class="s-meta">才艺 · 已播 20min</div></div>
+                    <div class="s-stats"><div class="s-viewers">3.6k</div><div class="s-label">观看</div></div>
+                    <button class="s-action">👁</button>
+                </div>
+            </div>
+            <div class="monitor-card">
+                <div class="card-header"><span class="card-title">⚙ 系统资源</span><span class="count">服务器集群</span></div>
+                <div class="resource-item"><div class="r-header"><span class="r-name">CPU 使用率</span><span class="r-val">46.2%</span></div><div class="progress-bar"><div class="fill green" style="width:46.2%;"></div></div></div>
+                <div class="resource-item"><div class="r-header"><span class="r-name">内存使用率</span><span class="r-val">62.8%</span></div><div class="progress-bar"><div class="fill pink" style="width:62.8%;"></div></div></div>
+                <div class="resource-item"><div class="r-header"><span class="r-name">磁盘 IO</span><span class="r-val">34.5%</span></div><div class="progress-bar"><div class="fill gold" style="width:34.5%;"></div></div></div>
+                <div class="resource-item"><div class="r-header"><span class="r-name">网络带宽</span><span class="r-val">78.3%</span></div><div class="progress-bar"><div class="fill purple" style="width:78.3%;"></div></div></div>
+                <div class="resource-item"><div class="r-header"><span class="r-name">数据库连接</span><span class="r-val">156/500</span></div><div class="progress-bar"><div class="fill green" style="width:31.2%;"></div></div></div>
+            </div>
+        </div>
+        <div class="monitor-full">
+            <div class="card-header"><span class="card-title">📈 实时带宽使用趋势</span><span>最近24小时</span></div>
+            <div class="bandwidth-chart">
+                <div class="line-area">
+                    <svg class="line-svg" viewBox="0 0 600 100" preserveAspectRatio="none">
+                        <path d="M0,80 Q30,75 60,60 T120,45 T180,55 T240,35 T300,40 T360,25 T420,30 T480,20 T540,35 T600,30" fill="none" stroke="#FF4D6D" stroke-width="2"/>
+                        <path d="M0,80 Q30,75 60,60 T120,45 T180,55 T240,35 T300,40 T360,25 T420,30 T480,20 T540,35 T600,30 L600,100 L0,100 Z" fill="rgba(255,77,109,0.08)"/>
+                        <path d="M0,90 Q30,85 60,80 T120,75 T180,85 T240,70 T300,75 T360,65 T420,70 T480,60 T540,75 T600,70" fill="none" stroke="#00D9FF" stroke-width="2" opacity="0.6"/>
+                    </svg>
+                </div>
+                <span style="font-size:13px;color:rgba(255,255,255,0.2);">└── 下行带宽 ── 上行带宽</span>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="js/monitor.js"></script>
+
+</body>
+</html>

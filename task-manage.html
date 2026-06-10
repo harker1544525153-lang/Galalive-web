@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务管理 - GALA LIVE 后台</title>
+        <link rel="stylesheet" href="css/task-manage.css">
+
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="brand">
+        <div class="logo">G</div>
+        <div><span class="name">GALA LIVE</span><br><span class="ver">v2.0 管理后台</span></div>
+    </div>
+    <div class="nav">
+        <div class="nav-group">概览</div>
+        <div class="nav-item" onclick="navigateTo('dashboard')"><span class="icon">📊</span>仪表盘</div>
+        <div class="nav-group">运营管理</div>
+        <div class="nav-item" onclick="navigateTo('host-manage')"><span class="icon">👤</span>主播管理</div>
+        <div class="nav-item" onclick="navigateTo('video-audit')"><span class="icon">🎬</span>视频管理</div>
+        <div class="nav-item active" onclick="navigateTo('task-manage')"><span class="icon">📋</span>任务管理</div>
+        <div class="nav-item" onclick="navigateTo('certification')"><span class="icon">✅</span>认证审核</div>
+        <div class="nav-item" onclick="navigateTo('gift-manage')"><span class="icon">🎁</span>道具管理</div>
+        <div class="nav-group">数据</div>
+        <div class="nav-item" onclick="navigateTo('monitor')"><span class="icon">📈</span>实时监控</div>
+        <div class="nav-item" onclick="navigateTo('finance')"><span class="icon">💰</span>资金管理</div>
+        <div class="nav-item" onclick="navigateTo('data-report')"><span class="icon">📋</span>数据报表</div>
+        <div class="nav-group">系统</div>
+        <div class="nav-item" onclick="navigateTo('user-manage')"><span class="icon">👥</span>用户管理</div>
+        <div class="nav-item" onclick="navigateTo('settings')"><span class="icon">⚙</span>系统设置</div>
+        <div class="nav-item" onclick="navigateTo('logs')"><span class="icon">📝</span>操作日志</div>
+    </div>
+    <div class="user-info">
+        <div class="avatar" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号">管</div>
+        <div class="detail" onclick="location.href='admin-profile.html'" style="cursor:pointer;" title="管理员账号"><div class="uname">管理员</div><div class="urole">超级管理员</div></div>
+        <button class="logout" onclick="location.href='login.html'">⏻</button>
+    </div>
+</div>
+<!-- Main -->
+<div class="main">
+    <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="breadcrumb">运营管理 / <span>任务管理</span></div>
+        <div class="search-box"><span>🔍</span><input type="text" placeholder="搜索任务名称..."></div>
+        <div class="actions">
+            <button class="act-btn" onclick="toggleNotify()">🔔</button>
+            <button class="act-btn" onclick="toggleSettings()">⚙</button>
+        </div>
+        </div>
+    <!-- 通知面板 -->
+    <div class="hdr-panel" id="notifyPanel">
+        <div class="hp-header"><div class="hp-title">消息中心</div><div class="hp-badge">3条未读</div></div>
+        <div class="hp-tabs"><div class="hp-tab active" onclick="switchNotifyTab(this,'all')">通知</div><div class="hp-tab" onclick="switchNotifyTab(this,'msg')">消息</div><div class="hp-tab" onclick="switchNotifyTab(this,'todo')">待办</div></div>
+        <div class="hp-list" id="notifyList">
+            <div class="hp-item" onclick="navigateTo('host-manage')"><div class="hp-icon" style="background:rgba(255,77,109,0.1);">👤</div><div class="hp-content"><div class="hp-text">新主播"小甜甜"申请入驻</div><div class="hp-time">5分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('certification')"><div class="hp-icon" style="background:rgba(0,217,255,0.1);">✅</div><div class="hp-content"><div class="hp-text">有3条新的认证申请待审核</div><div class="hp-time">30分钟前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item" onclick="navigateTo('gift-manage')"><div class="hp-icon" style="background:rgba(255,215,0,0.1);">🎁</div><div class="hp-content"><div class="hp-text">道具"星空特效"库存不足</div><div class="hp-time">1小时前</div></div><div class="hp-dot"></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">📊</div><div class="hp-content"><div class="hp-text">系统数据日报已生成</div><div class="hp-time">2小时前</div></div></div>
+            <div class="hp-item"><div class="hp-icon" style="background:rgba(255,255,255,0.05);">🔔</div><div class="hp-content"><div class="hp-text">服务器维护通知：6月15日凌晨2-4点</div><div class="hp-time">昨天</div></div></div>
+        </div>
+    </div>
+    <div class="hdr-panel" id="securityPanel">
+        <div class="hp-header"><div class="hp-title">安全中心</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>🔐</span><span>安全设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('logs')"><span>📝</span><span>操作日志</span></div>
+        <div class="hp-menu-item" onclick="location.href='admin-profile.html'"><span>👤</span><span>账号管理</span></div>
+        <div class="hp-menu-item" onclick="location.href='login.html'"><span>⏻</span><span>退出登录</span></div>
+    </div>
+    <div class="hdr-panel" id="settingsPanel">
+        <div class="hp-header"><div class="hp-title">快捷设置</div></div>
+        <div class="hp-menu-item" onclick="navigateTo('settings')"><span>⚙</span><span>系统设置</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('user-manage')"><span>👥</span><span>用户管理</span></div>
+        <div class="hp-menu-item" onclick="navigateTo('level-manage')"><span>⭐</span><span>等级管理</span></div>
+    </div>
+    <div class="content">
+        <div class="page-title">任务管理</div>
+        <div class="page-sub">管理平台日常任务和活动</div>
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active">全部任务</div>
+            <div class="tab">日常任务</div>
+            <div class="tab">活动任务</div>
+            <div class="tab">主播任务</div>
+        </div>
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button class="btn btn-secondary">导出</button>
+            </div>
+            <div class="toolbar-right">
+                <button class="btn btn-primary" onclick="addTask()">+ 新建任务</button>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="table-card">
+            <table class="data-table">
+                <thead><tr><th>任务名称</th><th>类型</th><th>目标</th><th>奖励</th><th>参与人数</th><th>开始时间</th><th>结束时间</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                    <tr><td style="font-weight:600;">每日签到</td><td><span class="type-tag">日常</span></td><td>每日签到</td><td class="reward">💎 10钻石</td><td>89,562</td><td>2024-01-01</td><td>长期有效</td><td><span class="status active">● 进行中</span></td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td style="font-weight:600;">连续直播7天</td><td><span class="type-tag">主播</span></td><td>连续7天开播</td><td class="reward">💎 500钻石</td><td>2,568</td><td>2024-06-01</td><td>2024-06-30</td><td><span class="status active">● 进行中</span></td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td style="font-weight:600;">周末双倍收益</td><td><span class="type-tag">活动</span></td><td>周末直播收益翻倍</td><td class="reward">双倍收益票</td><td>5,234</td><td>2024-06-01</td><td>2024-06-30</td><td><span class="status active">● 进行中</span></td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td style="font-weight:600;">新人首充</td><td><span class="type-tag">活动</span></td><td>首次充值任意金额</td><td class="reward">💎 额外20%</td><td>12,568</td><td>2024-01-01</td><td>长期有效</td><td><span class="status active">● 进行中</span></td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                    <tr><td style="font-weight:600;">邀请好友</td><td><span class="type-tag">日常</span></td><td>邀请好友注册</td><td class="reward">💎 100钻石/人</td><td>45,234</td><td>2024-01-01</td><td>长期有效</td><td><span class="status active">● 进行中</span></td><td><button class="action-btn edit-btn">编辑</button><button class="action-btn del-btn">删除</button></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 新建任务弹窗 -->
+<div class="task-modal-overlay" id="taskModal">
+    <div class="task-modal">
+        <div class="tm-header">
+            <div class="tm-title">新建任务</div>
+            <button class="tm-close" onclick="closeTaskModal()">×</button>
+        </div>
+        <div class="tm-body">
+            <div class="tm-row">
+                <div class="tm-field">
+                    <label>任务名称</label>
+                    <input type="text" placeholder="请输入任务名称" id="tm-name">
+                </div>
+                <div class="tm-field">
+                    <label>任务类型</label>
+                    <select id="tm-type">
+                        <option value="">请选择</option>
+                        <option value="daily">日常任务</option>
+                        <option value="activity">活动任务</option>
+                        <option value="host">主播任务</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tm-row">
+                <div class="tm-field">
+                    <label>任务目标</label>
+                    <input type="text" placeholder="请输入任务目标" id="tm-target">
+                </div>
+                <div class="tm-field">
+                    <label>奖励</label>
+                    <input type="text" placeholder="如：💎 100钻石" id="tm-reward">
+                </div>
+            </div>
+            <div class="tm-row">
+                <div class="tm-field">
+                    <label>开始时间</label>
+                    <input type="date" id="tm-start">
+                </div>
+                <div class="tm-field">
+                    <label>结束时间</label>
+                    <input type="date" id="tm-end">
+                </div>
+            </div>
+            <div class="tm-row">
+                <div class="tm-field">
+                    <label>任务描述</label>
+                    <textarea placeholder="请输入任务描述" id="tm-desc"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="tm-footer">
+            <button class="btn btn-secondary" onclick="closeTaskModal()">取消</button>
+            <button class="btn btn-primary" onclick="submitTask()">确认创建</button>
+        </div>
+    </div>
+</div>
+
+    <script src="js/task-manage.js"></script>
+
+</body>
+</html>
